@@ -10,7 +10,7 @@ RUN curl -L http://bootstrap.saltstack.com -o $SALT_INSTALLER \
  && rm $SALT_INSTALLER
 
 RUN groupadd $SALT_GROUP \
- && adduser -m -s /sbin/nologin -g $SALT_GROUP $SALT_USER \
+ && adduser -m -s /bin/bash -g $SALT_GROUP $SALT_USER \
  && sed -i 's/#user: root/user: salt/g' /etc/salt/master\
  && sed -i 's/#user: root/user: salt/g' /etc/salt/minion \
  && sed -i 's/#sudo_user: root/sudo_user: root/g' /etc/salt/minion \
@@ -25,3 +25,5 @@ RUN groupadd $SALT_GROUP \
  && echo 'salt    ALL=(ALL)       NOPASSWD:ALL' > /etc/sudoers.d/salt
 
 USER $SALT_USER
+
+EXPOSE 4505 4506
