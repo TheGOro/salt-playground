@@ -11,32 +11,44 @@ docker build -t salt:latest .
 docker network create salt-mgmt
 ```
 
-* Start the master node
+* Start the master node in the foreground
 ```bash
 docker run --rm -ti -h salt --name salt --net salt-mgmt salt:latest salt-master --log-level=debug
 ```
-* Start a minion node
+
+* Alternatively, you can start master node in the background as well
 ```bash
-docker run --rm -ti -h minion01 --name minion01 --net salt-mgmt salt:latest salt-minion --log-level=debug
+docker run --rm -d -h salt --name salt --net salt-mgmt salt:latest salt-master --log-level=debug
 ```
+
+* Start a minion node in the foreground
+```bash
+docker run --rm -ti -u root -h web1 --name web1 --net salt-mgmt salt:latest salt-minion --log-level=debug
+```
+
+* Alternatively, you can start a minion in the background as well
+```bash
+docker run --rm -d -u root -h web1 --name web1 --net salt-mgmt salt:latest salt-minion --log-level=debug
+```
+
 
 Salt activities
 ---------------
 * Check a minion's key and its status on the master:
 ```bash
-docker exec -t salt salt-key -f minion01
+docker exec -t salt salt-key -f web1
 ```
 
 * Query the fingerprint of a minion:
 ```bash
-docker exec -t minion01 salt-call --local key.finger
+docker exec -t web1 salt-call --local key.finger
 ```
 * Accept minion key
 ```bash
-docker exec -t salt salt-key -a minion01
+docker exec -ti salt salt-key -a web1
 ```
 
-* Do sanity check
+* Do sanity (ping test) check
 ```bash
 docker exec -t salt salt '*' test.ping
 ```
