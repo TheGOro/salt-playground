@@ -23,12 +23,12 @@ docker run --rm -d -h salt --name salt --net salt-mgmt salt:latest salt-master -
 
 * Start a minion node in the foreground
 ```bash
-docker run --rm -ti -u root -h web1 --name web1 --net salt-mgmt salt:latest salt-minion --log-level=debug
+docker run --rm -ti -u root -h web1 --name web1 --net salt-mgmt -p 8000:8000 salt:latest salt-minion --log-level=debug
 ```
 
 * Alternatively, you can start a minion in the background as well
 ```bash
-docker run --rm -d -u root -h web1 --name web1 --net salt-mgmt salt:latest salt-minion --log-level=debug
+docker run --rm -d -u root -h web1 --name web1 --net salt-mgmt -p 8000:8000 salt:latest salt-minion --log-level=debug
 ```
 
 
