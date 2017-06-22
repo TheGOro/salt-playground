@@ -11,24 +11,14 @@ docker build -t salt:latest .
 docker network create salt-mgmt
 ```
 
-* Start the master node in the foreground
+* Start the master node
 ```bash
-docker run --rm -ti -h salt --name salt --net salt-mgmt salt:latest salt-master --log-level=debug
-```
-
-* Alternatively, you can start master node in the background as well
-```bash
-docker run --rm -d -h salt --name salt --net salt-mgmt salt:latest salt-master --log-level=debug
-```
-
-* Start a minion node in the foreground
-```bash
-docker run --rm -ti -u root -h web1 --name web1 --net salt-mgmt -p 8000:8000 salt:latest salt-minion --log-level=debug
+docker run --privileged -v /sys/fs/cgroup:/sys/fs/cgroup:ro -d -h salt --name salt --net salt-net salt:latest
 ```
 
 * Alternatively, you can start a minion in the background as well
 ```bash
-docker run --rm -d -u root -h web1 --name web1 --net salt-mgmt -p 8000:8000 salt:latest salt-minion --log-level=debug
+docker run --privileged -v /sys/fs/cgroup:/sys/fs/cgroup:ro -d -h web1 --name web1 --net salt-net -p 8000:8000 salt:latest
 ```
 
 
