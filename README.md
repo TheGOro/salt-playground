@@ -8,7 +8,7 @@ docker build -t salt:latest .
 ```
 * Create a management network:
 ```bash
-docker network create salt-mgmt
+docker network create salt-net
 ```
 
 * Start the master node
